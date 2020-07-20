@@ -8,7 +8,7 @@ import numpy
 #The purpose of this program is to get data from CSV files and format it to the user's requested parameters
 def extractAndFormat(state,daysNumber):
     colNumber = 0
-    stateFile = open('dataStates.csv',newline='')
+    stateFile = open('data/dataStates.csv',newline='')
     stateFileReader = csv.reader(stateFile)
     states = list(stateFileReader)
     for curr in states:
@@ -16,7 +16,7 @@ def extractAndFormat(state,daysNumber):
             break
         colNumber = colNumber+1
     
-    casesFile = open('dataCases.csv',newline='')
+    casesFile = open('data/dataCases.csv',newline='')
     casesFileReader = csv.reader(casesFile)
     cases = list(casesFileReader)
     stateCases = []
@@ -25,7 +25,7 @@ def extractAndFormat(state,daysNumber):
         stateCases.append(int(cases[i][colNumber]))
         i = i+1
     
-    datesFile = open('dataDates.csv',newline='')
+    datesFile = open('data/dataDates.csv',newline='')
     datesFileReader = csv.reader(datesFile)
     dates = list(datesFileReader)
     formattedDates = []

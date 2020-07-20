@@ -72,17 +72,17 @@ def getCases(page):
 
   
 def sendData(states,dates,cases):
-    dataCasesFile = open('dataCases.csv','w+',newline='')
+    dataCasesFile = open('data/dataCases.csv','w+',newline='')
     dataCasesWriter = csv.writer(dataCasesFile)
     for row in cases:
         dataCasesWriter.writerow(row)
     dataCasesFile.close()
-    dataStatesFile = open('dataStates.csv','w+',newline='')
+    dataStatesFile = open('data/dataStates.csv','w+',newline='')
     dataStatesWriter = csv.writer(dataStatesFile)
     for state in states:
         dataStatesWriter.writerow([state])
     dataStatesFile.close()
-    dataDatesFile = open('dataDates.csv','w+',newline='')
+    dataDatesFile = open('data/dataDates.csv','w+',newline='')
     dataDatesWriter = csv.writer(dataDatesFile)
     for date in dates:
         dataDatesWriter.writerow([date])
