@@ -2,6 +2,7 @@ import requests, bs4
 import pandas as pd
 import seaborn as sb
 import matplotlib as mp
+import csv
 
 #Author Henry Niermann
 #Program to scrape COVID data and display it for viewing
@@ -9,6 +10,7 @@ import matplotlib as mp
 def getStates(page):
     states = []
     firstStateChild = page.find(title='COVID-19 pandemic in Alaska')
+    states.append(firstStateChild.get_text())
     firstState = firstStateChild.find_parent('th')
     i = 0
     for state in firstState.find_next_siblings('th'):
@@ -68,21 +70,23 @@ def getCases(page):
 
     return cases
 
-def getData(states,dates,cases):
-    alaskanCases = []
-    rows = len(dates)
-    i = 0
-    while i < rows:
-        alaskanCases.append(cases[i][0])
-        i = i+1
-    data = pd.DataFrame({'Date': dates, 'AZ' : alaskanCases})
-    return data
-    
-def displayData(d):
-    sb.set(font_scale=0.6)
-    plot = sb.relplot(x="Date", y="AZ", data=d)
-    plot.set_xticklabels(rotation=90)
-    mp.pyplot.show()
+  
+def sendData(states,dates,cases):
+    dataCasesFile = open('dataCases.csv','w+',newline='')
+    dataCasesWriter = csv.writer(dataCasesFile)
+    for row in cases:
+        dataCasesWriter.writerow(row)
+    dataCasesFile.close()
+    dataStatesFile = open('dataStates.csv','w+',newline='')
+    dataStatesWriter = csv.writer(dataStatesFile)
+    for state in states:
+        dataStatesWriter.writerow([state])
+    dataStatesFile.close()
+    dataDatesFile = open('dataDates.csv','w+',newline='')
+    dataDatesWriter = csv.writer(dataDatesFile)
+    for date in dates:
+        dataDatesWriter.writerow([date])
+    dataDatesFile.close()
 
 
 # MAIN PROGRAM
@@ -93,9 +97,9 @@ numbersPage = bs4.BeautifulSoup(res.text,'html.parser')
 states = getStates(numbersPage)
 dates = getDates(numbersPage)
 cases = getCases(numbersPage)
-# #Format data and display
-data = getData(states,dates,cases)
-displayData(data)
+# Send data to CSV file
+sendData(states,dates,cases)
+
 
 
 
