@@ -21,3 +21,5 @@ Then run the display using
 python display.py
 ```
 This will ask you for which state you'd like to get data for, and how many days back you would like to get a display for.
+# Author
+Henry Niermann
